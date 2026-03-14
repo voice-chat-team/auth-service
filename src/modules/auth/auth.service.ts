@@ -17,7 +17,7 @@ export class AuthService {
       this.userClient.getUserByEmail(email),
     );
     console.log(exsistUser);
-    // if (!exsistUser) throw new RpcException('Пользователь не найден');
+    if (!exsistUser) throw new RpcException('Пользователь не найден');
 
     return exsistUser;
   }
