@@ -16,7 +16,7 @@ export class AuthService {
     const exsistUser = await firstValueFrom(
       this.userClient.getUserByEmail(email),
     );
-    console.log(exsistUser);
+
     if (!exsistUser) throw new RpcException('Пользователь не найден');
 
     return exsistUser;
