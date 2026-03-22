@@ -18,7 +18,11 @@ export class AuthService {
       this.userClientGrpc.getUserByEmail({ email }),
     );
 
-    if (!exsistUser) throw new RpcException('Пользователь не найден');
+    if (!exsistUser)
+      throw new RpcException({
+        status: false,
+        message: 'Пользователь не найден',
+      });
 
     return {
       accessToken: 'accessToken',
