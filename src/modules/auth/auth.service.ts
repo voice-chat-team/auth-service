@@ -20,7 +20,7 @@ export class AuthService {
 
     if (!exsistUser)
       throw new RpcException({
-        status: false,
+        status: 404,
         message: 'Пользователь не найден',
       });
 
