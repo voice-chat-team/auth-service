@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { LoginUserDto } from '@voice-chat/contracts';
+import type {
+  LoginRequest,
+  LoginResponse,
+} from '@voice-chat/contracts/gen/auth';
 import { RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { UserClientGrpc } from '../user/user.grpc';
@@ -8,7 +11,7 @@ import { UserClientGrpc } from '../user/user.grpc';
 export class AuthService {
   constructor(private readonly userClientGrpc: UserClientGrpc) {}
 
-  async loginUser(dto: LoginUserDto) {
+  async loginUser(dto: LoginRequest): Promise<LoginResponse> {
     const { email } = dto;
 
     const exsistUser = await firstValueFrom(
@@ -17,6 +20,9 @@ export class AuthService {
 
     if (!exsistUser) throw new RpcException('Пользователь не найден');
 
-    return exsistUser;
+    return {
+      accessToken: 'accessToken',
+      refreshToken: 'refreshToken',
+    };
   }
 }

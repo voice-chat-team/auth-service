@@ -1,17 +1,14 @@
 import { Controller } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { MessagePattern } from '@nestjs/microservices';
-import {
-  AUTH_MESSAGE_PATTERNS,
-  type LoginUserDto,
-} from '@voice-chat/contracts';
+import { GrpcMethod } from '@nestjs/microservices';
+import type { LoginRequest } from '@voice-chat/contracts/gen/auth';
 
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @MessagePattern(AUTH_MESSAGE_PATTERNS.USER_LOGIN)
-  login(dto: LoginUserDto) {
+  @GrpcMethod('AuthService', 'Login')
+  login(dto: LoginRequest) {
     return this.authService.loginUser(dto);
   }
 }
