@@ -4,6 +4,8 @@ import type {
   GetUserByEmailRequest,
   GetUserByIdRequest,
   UserServiceClient,
+  CreateUserRequest,
+  GetUserByUsernameRequest,
 } from '@voice-chat/contracts/gen/user';
 
 @Injectable()
@@ -23,5 +25,13 @@ export class UserClientGrpc implements OnModuleInit {
 
   getUserById(request: GetUserByIdRequest) {
     return this.userServiceClient.getUserById(request);
+  }
+
+  getUserByUsername(request: GetUserByUsernameRequest) {
+    return this.userServiceClient.getUserByUsername(request);
+  }
+
+  createUser(request: CreateUserRequest) {
+    return this.userServiceClient.createUser(request);
   }
 }
