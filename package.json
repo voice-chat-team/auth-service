@@ -29,6 +29,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/microservices": "^11.1.16",
     "@nestjs/platform-express": "^11.0.1",
+    "@voice-chat/common": "^1.0.2",
     "@voice-chat/contracts": "^1.0.12",
     "bcrypt": "^6.0.0",
     "reflect-metadata": "^0.2.2",

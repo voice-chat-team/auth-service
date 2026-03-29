@@ -13,6 +13,7 @@ import { UserClientGrpc } from '../user/user.grpc';
 
 import bcrypt from 'bcrypt';
 import { PassportService } from '../passport/passport.service';
+import { RpcStatus } from '@voice-chat/common';
 
 const SALT_ROUNDS = 10;
 
@@ -32,7 +33,7 @@ export class AuthService {
 
     if (!user)
       throw new RpcException({
-        code: 3,
+        code: RpcStatus.INVALID_ARGUMENT,
         details: 'Неверный email или пароль',
       });
 
@@ -41,7 +42,7 @@ export class AuthService {
 
     if (!isPasswordMatch)
       throw new RpcException({
-        code: 3,
+        code: RpcStatus.INVALID_ARGUMENT,
         details: 'Неверный email или пароль',
       });
 
@@ -65,7 +66,7 @@ export class AuthService {
 
     if (exsistingUser)
       throw new RpcException({
-        code: 3,
+        code: RpcStatus.INVALID_ARGUMENT,
         details: 'Пользователь с таким email или username уже существует',
       });
 
@@ -84,7 +85,7 @@ export class AuthService {
       return { status: !!user };
     } catch {
       throw new RpcException({
-        code: 3,
+        code: RpcStatus.INVALID_ARGUMENT,
         details: 'Ошибка при регистрации',
       });
     }
