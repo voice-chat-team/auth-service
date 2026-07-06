@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import {
-  type LoginRequest,
-  type LoginResponse,
-  type RegistrationRequest,
-  type RegistrationResponse,
-  type VerifyTokenRequest,
-  type VerifyTokenResponse,
+import type {
+  RefreshTokenRequest,
+  RefreshTokenResponse,
+  LoginRequest,
+  LoginResponse,
+  RegistrationRequest,
+  RegistrationResponse,
+  VerifyTokenRequest,
+  VerifyTokenResponse,
 } from '@voice-chat/contracts/gen/auth';
 import { RpcException } from '@nestjs/microservices';
 
@@ -98,11 +100,18 @@ export class AuthService {
         ...payload,
       };
     } catch {
-      return {
-        isValid: false,
-        userId: '',
-        username: '',
-      };
+      throw new RpcException({
+        code: RpcStatus.UNAUTHENTICATED,
+        details: 'Невалидный токен',
+      });
     }
+  }
+
+  async refreshTokens(dto: RefreshTokenRequest): Promise<RefreshTokenResponse> {
+    const { refreshToken } = dto;
+
+    const tokens = await this.passportService.refreshTokens(refreshToken);
+
+    return tokens;
   }
 }

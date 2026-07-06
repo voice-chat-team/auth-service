@@ -3,9 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: tankistpro512/voice-chat-auth-service:latest
     container_name: voice-chat-auth-service
-    env_file:
-      - .env.production.local
+    # env_file:
+    #   - .env.production.local
     networks:
       - voice-chat-network
     restart: unless-stopped

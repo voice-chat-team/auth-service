@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 import type { TokenPayloadDto } from './dto';
 import { ConfigService } from '@nestjs/config';
+import { RpcException } from '@nestjs/microservices';
+import { RpcStatus } from '@voice-chat/common';
 
 @Injectable()
 export class PassportService {
@@ -39,5 +41,23 @@ export class PassportService {
         `JWT_${tokenType.toUpperCase()}_SECRET`,
       ),
     });
+  }
+
+  async refreshTokens(refreshToken: string) {
+    try {
+      const payload = await this.verifyToken(refreshToken, 'refresh');
+
+      const tokens = await this.generateTokens({
+        userId: payload.userId,
+        username: payload.username,
+      });
+
+      return tokens;
+    } catch {
+      throw new RpcException({
+        code: RpcStatus.UNAUTHENTICATED,
+        details: 'Невалидный Refresh-токен',
+      });
+    }
   }
 }

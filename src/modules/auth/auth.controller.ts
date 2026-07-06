@@ -8,6 +8,8 @@ import type {
   LoginResponse,
   VerifyTokenRequest,
   VerifyTokenResponse,
+  RefreshTokenRequest,
+  RefreshTokenResponse,
 } from '@voice-chat/contracts/gen/auth';
 
 @Controller()
@@ -27,5 +29,10 @@ export class AuthController {
   @GrpcMethod('AuthService', 'VerifyToken')
   async verifyToken(dto: VerifyTokenRequest): Promise<VerifyTokenResponse> {
     return await this.authService.verifyToken(dto);
+  }
+
+  @GrpcMethod('AuthService', 'RefreshToken')
+  async refreshTokens(dto: RefreshTokenRequest): Promise<RefreshTokenResponse> {
+    return await this.authService.refreshTokens(dto);
   }
 }
