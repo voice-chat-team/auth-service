@@ -50,6 +50,7 @@ export class AuthService {
     const tokens = await this.passportService.generateTokens({
       userId: user.id,
       username: user.username,
+      sub: user.id,
     });
 
     return tokens;
