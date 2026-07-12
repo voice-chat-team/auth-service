@@ -29,7 +29,7 @@ export class AuthService {
   async loginUser(dto: LoginRequest): Promise<LoginResponse> {
     const { email, password } = dto;
 
-    const { user } = await this.userClient.call('getUser', { email });
+    const { user } = await this.userClient.call('getUserForAuth', { email });
 
     if (!user)
       throw new RpcException({
