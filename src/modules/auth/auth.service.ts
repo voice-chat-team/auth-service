@@ -39,7 +39,7 @@ export class AuthService {
 
     const { passwordHash } = user;
 
-    const isPasswordMatch = await bcrypt.compare(password, passwordHash!);
+    const isPasswordMatch = await bcrypt.compare(password, passwordHash);
 
     if (!isPasswordMatch)
       throw new RpcException({
